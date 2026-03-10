@@ -22,7 +22,7 @@ const Navbar = () => {
     return (
         <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-background/80 backdrop-blur-md border-b border-slate-800 py-3' : 'bg-transparent py-5'}`}>
             <div className="container-custom flex items-center justify-between">
-                <a href="#" className="flex items-center gap-3 group">
+                <a href="/" className="flex items-center gap-3 group">
                     <div className="w-10 h-10 rounded-xl overflow-hidden border border-slate-700/50 shadow-lg group-hover:border-accent transition-colors">
                         <img src="/assets/clubgg-logo.png" alt="ClubGG Agent Tools Logo" className="w-full h-full object-cover" />
                     </div>

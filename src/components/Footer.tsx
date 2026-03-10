@@ -8,7 +8,7 @@ const Footer = () => {
             <div className="container-custom">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
                     <div className="md:col-span-2">
-                        <a href="#" className="flex items-center gap-3 mb-6">
+                        <a href="/" className="flex items-center gap-3 mb-6">
                             <div className="w-10 h-10 rounded-xl overflow-hidden border border-slate-700/50 shadow-lg">
                                 <img src="/assets/clubgg-logo.png" alt="ClubGG Agent Tools Logo" className="w-full h-full object-cover" />
                             </div>
@@ -20,8 +20,8 @@ const Footer = () => {
                             Automation tools specifically designed for ClubGG poker agents and club managers. Speed up your weekly settlements with OCR.
                         </p>
                         <div className="flex gap-4">
-                            <a href="#" className="text-slate-600 hover:text-white transition-colors"><Twitter className="w-5 h-5" /></a>
-                            <a href="#" className="text-slate-600 hover:text-white transition-colors"><Mail className="w-5 h-5" /></a>
+                            <a href="javascript:void(0)" className="text-slate-600 hover:text-white transition-colors cursor-default"><Twitter className="w-5 h-5" /></a>
+                            <a href="javascript:void(0)" className="text-slate-600 hover:text-white transition-colors cursor-default"><Mail className="w-5 h-5" /></a>
                         </div>
                     </div>
 
@@ -67,8 +67,8 @@ const Footer = () => {
                         © {currentYear} ClubGG Agent Tools. All rights reserved. Not affiliated with ClubGG.
                     </p>
                     <div className="flex gap-8">
-                        <a href="#" className="text-slate-600 hover:text-slate-400 text-[10px] font-bold uppercase tracking-widest">Terms</a>
-                        <a href="#" className="text-slate-600 hover:text-slate-400 text-[10px] font-bold uppercase tracking-widest">Privacy</a>
+                        <a href="javascript:void(0)" className="text-slate-600 hover:text-slate-400 text-[10px] font-bold uppercase tracking-widest cursor-default">Terms</a>
+                        <a href="javascript:void(0)" className="text-slate-600 hover:text-slate-400 text-[10px] font-bold uppercase tracking-widest cursor-default">Privacy</a>
                     </div>
                 </div>
             </div>
