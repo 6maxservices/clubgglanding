@@ -1,112 +1,135 @@
-import { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { useEffect, useState } from 'react'
+import { Menu, X } from 'lucide-react'
 
-const Navbar = () => {
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+type NavbarProps = {
+  locale: 'en' | 'el'
+  onLocaleChange: (locale: 'en' | 'el') => void
+  nav: {
+    pricing: string
+    proof: string
+    demo: string
+    contact: string
+    primaryCta: string
+  }
+}
 
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+const navLinks = (nav: NavbarProps['nav']) => [
+  { name: nav.pricing, href: '#pricing' },
+  { name: nav.proof, href: '#proof' },
+  { name: nav.demo, href: '#demo' },
+  { name: nav.contact, href: '#updates' },
+]
 
-    const navLinks = [
-        { name: 'Features', href: '#features' },
-        { name: 'How it Works', href: '#how-it-works' },
-        { name: 'Roadmap', href: '#roadmap' },
-    ];
+const Navbar = ({ locale, onLocaleChange, nav }: NavbarProps) => {
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-    return (
-        <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-background/80 backdrop-blur-md border-b border-slate-800 py-3' : 'bg-transparent py-5'}`}>
-            <div className="container-custom flex items-center justify-between">
-                <a href="/" className="flex items-center gap-3 group">
-                    <div className="w-10 h-10 rounded-xl overflow-hidden border border-slate-700/50 shadow-lg group-hover:border-accent transition-colors">
-                        <img src="/assets/clubgg-logo.png" alt="ClubGG Agent Tools Logo" className="w-full h-full object-cover" />
-                    </div>
-                    <span className="font-bold text-xl tracking-tight hidden sm:block">
-                        ClubGG <span className="text-accent">Agent Tools</span>
-                    </span>
-                    <span className="font-bold text-xl tracking-tight sm:hidden">
-                        ClubGG <span className="text-accent">AT</span>
-                    </span>
-                </a>
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 12)
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
-                {/* Desktop Nav */}
-                <div className="hidden md:flex items-center gap-8">
-                    {navLinks.map((link) => (
-                        <a
-                            key={link.name}
-                            href={link.href}
-                            className="text-slate-300 hover:text-white transition-colors font-medium text-sm"
-                        >
-                            {link.name}
-                        </a>
-                    ))}
-                    <a
-                        href="https://t.me/ClubAgentOps"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-slate-300 hover:text-white transition-colors font-medium text-sm mr-2"
-                    >
-                        Support
-                    </a>
-                    <a
-                        href="https://t.me/Agent_Calc_bot"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-primary hover:bg-blue-700 text-white px-5 py-2.5 rounded-lg text-sm font-semibold transition-all shadow-lg shadow-primary/20"
-                    >
-                        Open Bot
-                    </a>
-                </div>
+  return (
+    <nav className={`site-nav ${isScrolled ? 'site-nav--scrolled' : ''}`}>
+      <div className="container-custom site-nav__inner">
+        <a href="/" className="brand-lockup">
+          <div className="brand-lockup__mark">
+            <img src="/assets/clubgg-logo.png" alt="AgentOpsify mark" className="h-full w-full object-cover" />
+          </div>
+          <div>
+            <p className="brand-lockup__name">AgentOpsify</p>
+            <p className="brand-lockup__meta">ClubGG operations layer</p>
+          </div>
+        </a>
 
-                {/* Mobile Menu Toggle */}
-                <button
-                    className="md:hidden text-slate-300 hover:text-white"
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                >
-                    {isMobileMenuOpen ? <X /> : <Menu />}
-                </button>
-            </div>
+        <div className="site-nav__desktop">
+          {navLinks(nav).map((link) => (
+            <a key={link.name} href={link.href} className="site-nav__link">
+              {link.name}
+            </a>
+          ))}
 
-            {/* Mobile Menu */}
-            {isMobileMenuOpen && (
-                <div className="md:hidden absolute top-full left-0 w-full bg-slate-900 border-b border-slate-800 py-6 px-4 flex flex-col gap-4 animate-in slide-in-from-top duration-300">
-                    {navLinks.map((link) => (
-                        <a
-                            key={link.name}
-                            href={link.href}
-                            className="text-slate-300 hover:text-white transition-colors font-medium text-lg text-center"
-                            onClick={() => setIsMobileMenuOpen(false)}
-                        >
-                            {link.name}
-                        </a>
-                    ))}
-                    <a
-                        href="https://t.me/ClubAgentOps"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-slate-400 hover:text-white transition-colors font-medium text-lg text-center mt-2"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                        Contact Support
-                    </a>
-                    <a
-                        href="https://t.me/Agent_Calc_bot"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="bg-primary hover:bg-blue-700 text-white px-5 py-4 rounded-xl text-lg font-bold transition-all text-center shadow-lg shadow-primary/20"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                    >
-                        Start on Telegram
-                    </a>
-                </div>
-            )}
-        </nav>
-    );
-};
+          <div className="locale-toggle" aria-label="Language toggle">
+            <button
+              type="button"
+              className={locale === 'en' ? 'locale-toggle__button locale-toggle__button--active' : 'locale-toggle__button'}
+              onClick={() => onLocaleChange('en')}
+            >
+              EN
+            </button>
+            <button
+              type="button"
+              className={locale === 'el' ? 'locale-toggle__button locale-toggle__button--active' : 'locale-toggle__button'}
+              onClick={() => onLocaleChange('el')}
+            >
+              EL
+            </button>
+          </div>
 
-export default Navbar;
+          <a
+            href="https://t.me/Agent_Calc_bot"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="site-nav__cta"
+          >
+            {nav.primaryCta}
+          </a>
+        </div>
+
+        <button
+          className="site-nav__menu-button"
+          onClick={() => setIsMobileMenuOpen((value) => !value)}
+          aria-label="Toggle navigation"
+          type="button"
+        >
+          {isMobileMenuOpen ? <X /> : <Menu />}
+        </button>
+      </div>
+
+      {isMobileMenuOpen ? (
+        <div className="site-nav__mobile">
+          {navLinks(nav).map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              className="site-nav__mobile-link"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              {link.name}
+            </a>
+          ))}
+
+          <div className="locale-toggle">
+            <button
+              type="button"
+              className={locale === 'en' ? 'locale-toggle__button locale-toggle__button--active' : 'locale-toggle__button'}
+              onClick={() => onLocaleChange('en')}
+            >
+              EN
+            </button>
+            <button
+              type="button"
+              className={locale === 'el' ? 'locale-toggle__button locale-toggle__button--active' : 'locale-toggle__button'}
+              onClick={() => onLocaleChange('el')}
+            >
+              EL
+            </button>
+          </div>
+
+          <a
+            href="https://t.me/Agent_Calc_bot"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="site-nav__cta site-nav__cta--mobile"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            {nav.primaryCta}
+          </a>
+        </div>
+      ) : null}
+    </nav>
+  )
+}
+
+export default Navbar
